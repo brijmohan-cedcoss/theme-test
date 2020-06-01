@@ -47,4 +47,10 @@ function register_my_menus() {
 
 add_action( 'init', 'register_my_menus' );
 
+/**
+ * Support thumbnails.
+ */
+add_theme_support( 'post-thumbnails' );
+
+
 
