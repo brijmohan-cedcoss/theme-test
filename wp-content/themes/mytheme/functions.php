@@ -48,45 +48,119 @@ function register_my_menus() {
 add_action( 'init', 'register_my_menus' );
 
 /**
- * Support thumbnails.
+ * Theme support.
  */
-if ( function_exists( 'add_theme_support' ) ) {
-	add_theme_support( 'post-thumbnails' );
-	set_post_thumbnail_size( 150, 150, true ); // default Post Thumbnail dimensions (cropped).
+function mytheme_theme_support() {
 
-	// Additional image sizes
-	// Delete the next line if you do not need additional image sizes.
-	add_image_size( 'category-thumb', 300, 9999 ); // 300 pixels wide (and unlimited height)
-}
+	// Add default posts and comments RSS feed links to head.
+	add_theme_support( 'automatic-feed-links' );
 
-/**
- * Custom header.
- */
-function themename_custom_header_setup() {
-	$args = array(
-		'default-image'      => get_template_directory_uri() . 'img/default-image.jpg',
-		'default-text-color' => '000',
-		'width'              => 1000,
-		'height'             => 250,
-		'flex-width'         => true,
-		'flex-height'        => true,
+	// Custom background color.
+	add_theme_support(
+		'custom-background',
+		array(
+			'default-color' => 'f5efe0',
+		)
 	);
-	add_theme_support( 'custom-header', $args );
-}
-add_action( 'after_setup_theme', 'themename_custom_header_setup' );
 
-/**
- * Custom Background.
- */
-add_theme_support( 'custom-background' );
+	// Set content-width.
+	global $content_width;
+	if ( ! isset( $content_width ) ) {
+		$content_width = 600;
+	}
 
-/**
- * Post formats.
- */
-function themename_post_formats_setup() {
+	/*
+	 * Enable support for Post Thumbnails on posts and pages.
+	 *
+	 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
+	 */
+	add_theme_support( 'post-thumbnails' );
+
+	// Set post thumbnail size.
+	set_post_thumbnail_size( 1200, 9999 );
+
+	// Add custom image size used in Cover Template.
+	add_image_size( 'mytheme-fullscreen', 1980, 9999 );
+
+	// Custom logo.
+	$logo_width  = 120;
+	$logo_height = 90;
+
+	// If the retina setting is active, double the recommended width and height.
+	if ( get_theme_mod( 'retina_logo', false ) ) {
+		$logo_width  = floor( $logo_width * 2 );
+		$logo_height = floor( $logo_height * 2 );
+	}
+
+	add_theme_support(
+		'custom-logo',
+		array(
+			'height'      => $logo_height,
+			'width'       => $logo_width,
+			'flex-height' => true,
+			'flex-width'  => true,
+		)
+	);
+
+	/*
+	 * Let WordPress manage the document title.
+	 * By adding theme support, we declare that this theme does not use a
+	 * hard-coded <title> tag in the document head, and expect WordPress to
+	 * provide it for us.
+	 */
+	add_theme_support( 'title-tag' );
+
+	/*
+	 * Switch default core markup for search form, comment form, and comments
+	 * to output valid HTML5.
+	 */
+	add_theme_support(
+		'html5',
+		array(
+			'search-form',
+			'comment-form',
+			'comment-list',
+			'gallery',
+			'caption',
+			'script',
+			'style',
+		)
+	);
+
+	/**
+	* Custom Background.
+	*/
+	add_theme_support( 'custom-background' );
+
+	/**
+	* Post formats.
+	*/
 	add_theme_support( 'post-formats', array( 'aside', 'gallery' ) );
+
+	/**
+	* Editor style support
+	*/
+	add_theme_support( 'editor-styles' );
+
+	/**
+	 * Custom header.
+	 */
+	add_theme_support(
+		'custom-header',
+		array(
+			'default-image'      => get_template_directory_uri() . 'img/default-image.jpg',
+			'default-text-color' => '000',
+			'width'              => 1000,
+			'height'             => 250,
+			'flex-width'         => true,
+			'flex-height'        => true,
+		)
+	);
+
 }
-add_action( 'after_setup_theme', 'themename_post_formats_setup' );
+
+add_action( 'after_setup_theme', 'mytheme_theme_support' );
+
 
 /**
  * Sidebar support.
@@ -107,56 +181,3 @@ function my_register_sidebars() {
 	/* Repeat register_sidebar() code for additional sidebars. */
 }
 add_action( 'widgets_init', 'my_register_sidebars' );
-
-/**
- * Custom logo support.
- */
-function themename_custom_logo_setup() {
-	$defaults = array(
-		'height'      => 100,
-		'width'       => 400,
-		'flex-height' => true,
-		'flex-width'  => true,
-		'header-text' => array( 'site-title', 'site-description' ),
-	);
-	add_theme_support( 'custom-logo', $defaults );
-}
-add_action( 'after_setup_theme', 'themename_custom_logo_setup' );
-
-/**
- * Title tag support.
- */
-add_theme_support( 'title-tag' );
-
-/**
- * Automaic feed link support.
- */
-add_theme_support( 'automatic-feed-links' );
-
-/**
- * Html5 support
- */
-add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'style', 'script' ) );
-
-/**
- * Editor style support
- */
-add_theme_support( 'editor-styles' );
-
-
-if ( ! isset( $content_width ) ) {
-	$content_width = 640;
-}
-/**
- * Content Width
- */
-function mytheme_adjust_content_width() {
-	global $content_width;
-
-	if ( is_page_template( 'full-width.php' ) ) {
-		$content_width = 780;
-	}
-}
-add_action( 'template_redirect', 'mytheme_adjust_content_width' );
-
-
