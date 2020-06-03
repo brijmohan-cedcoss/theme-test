@@ -213,6 +213,18 @@ add_action(
 			if ( $redirect ) {
 				wp_safe_redirect( esc_url( home_url() ), 307 ); // Redirecting user to home page if found true.
 			}
+		} elseif ( ! is_user_logged_in() ) { // Checking for the guest user.
+			$redirect = false;
+
+			if ( is_page( 2010 ) || is_page( 2012 ) ) { // Preventing guest user from accessing author center and subscriber center pages.
+				$redirect = true;
+			}
+
+			if ( $redirect ) {
+				wp_safe_redirect( esc_url( wp_login_url() ), 307 ); // Redirecting user to login page if found true.
+			}
+		} elseif ( is_user_logged_in() && ( 'author' === $user ) ) { // Redirect for author.
+			$redirect = false;
 		}
 	}
 );
