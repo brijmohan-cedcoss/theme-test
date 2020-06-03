@@ -16,7 +16,8 @@
  * @since      Mytheme 1.0
  */
 
-get_header(); ?>
+get_header();
+?>
 
 	<!-- Page Content -->
 	<div class="container">

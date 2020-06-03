@@ -181,3 +181,38 @@ function my_register_sidebars() {
 	/* Repeat register_sidebar() code for additional sidebars. */
 }
 add_action( 'widgets_init', 'my_register_sidebars' );
+
+/**
+ * Getting user roles.
+ */
+function user_role() {
+	$current_user = wp_get_current_user();
+
+	$user_roles = $current_user->roles;
+	$user_role  = array_shift( $user_roles );
+
+	return $user_role;
+}
+
+add_action(
+	'template_redirect',
+	function() {
+
+		$page_id = 2010;
+		$user    = user_role(); // Getting user roles here.
+
+		// If logged in do not redirect.
+		// If user is subscriber prevent access to author Center page.
+		if ( is_user_logged_in() && ( 'subscriber' === $user ) ) {
+			$redirect = false;
+
+			if ( is_page( $page_id ) ) {
+				$redirect = true;
+			}
+
+			if ( $redirect ) {
+				wp_safe_redirect( esc_url( home_url() ), 307 ); // Redirecting user to home page if found true.
+			}
+		}
+	}
+);
