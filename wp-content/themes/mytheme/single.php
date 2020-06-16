@@ -47,6 +47,7 @@ get_header(); ?>
 							<div class="card-footer text-muted">
 								Posted on <?php the_date(); ?> by
 								<a href="#"><?php the_author(); ?></a>
+								<?php comments_template(); ?>
 							</div>
 						</div>
 						<?php

@@ -170,8 +170,8 @@ function my_register_sidebars() {
 	register_sidebar(
 		array(
 			'id'            => 'primary',
-			'name'          => __( 'Primary Sidebar' ),
-			'description'   => __( 'A short description of the sidebar.' ),
+			'name'          => __( 'Primary Sidebar', 'mytheme' ),
+			'description'   => __( 'This is a primary sidebar.' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</div>',
 			'before_title'  => '<h3 class="widget-title">',
@@ -228,3 +228,11 @@ add_action(
 		}
 	}
 );
+
+require get_stylesheet_directory() . '/inc/class-mytheme-widget.php'; // Including custom widget file.
+new Mytheme_Widget();
+
+require get_stylesheet_directory() . '/inc/class-mytheme-customizer.php'; // Including customizer file.
+new Mytheme_Customizer();
+
+

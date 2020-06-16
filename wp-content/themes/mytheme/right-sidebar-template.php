@@ -1,19 +1,10 @@
 <?php
 /**
- * The main template file
+ * Template Name: Right Sidebar Template
  *
- * This is the page file in a WordPress theme
- * and one of the required files for a theme to access a page.
- * It is used to display a page when nothing more specific matches a query.
- * php version 7.3.5
- *
- * @category   null
- * @package    WordPress
- * @subpackage Mytheme
- * @author     brij1234 <brijmohan11.1996@gmail.com>
- * @license    GNU General Public License version 2 or later; see LICENSE
- * @link       https://developer.wordpress.org/themes/basics/template-hierarchy/
- * @since      Mytheme 1.0
+ * @package WordPress
+ * @subpackage Twenty_Fourteen
+ * @since Twenty Fourteen 1.0
  */
 
 get_header();
@@ -23,6 +14,7 @@ get_header();
 	<div class="container">
 
 		<div class="row">
+
 			<!-- Blog Entries Column -->
 			<div class="col-md-8">
 
@@ -76,27 +68,11 @@ get_header();
 
 			</div>
 
-		<?php // get_sidebar(); ?>
+		<?php get_sidebar(); ?>
 
 		</div>
 		<!-- /.row -->
-		<?php if ( get_theme_mod( 'basic-author-callout-display' ) === 'Yes' ) { ?>
-			<div class="col-9 ">
-				<div class="author-image">
-					<img src="<?php echo esc_html( wp_get_attachment_url( get_theme_mod( 'basic-author-callout-image' ) ) ); ?>" alt="Author Image">
-				</div>
-				<div class="author-content">
-					<?php
-					$author_text = get_theme_mod( 'basic-author-callout-text' );
-					if ( '' !== $author_text ) {
-						echo esc_html( sanitize_text_field( wpautop( $author_text ) ) );
-					} else {
-						echo 'Edit this by going to your Dashboard -> Appearance -> Customise -> Author Editor';
-					}
-					?>
-				</div>
-			</div> 
-		<?php } ?>
+
 	</div>
 	<!-- /.container -->
 
