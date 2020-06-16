@@ -11,6 +11,7 @@
  * Domain Path: /languages
  * License:     GPL2
  *
+ *
  * My Plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -26,25 +27,25 @@
  */
 
 /**
- * Register the "book" custom post type
+ * Creating an option which sets when the plugin activates
  */
-function myplugin_post_type() {
-	register_post_type(
-		'book',
-		array(
-			'public' => true,
-			'label'  => 'Books',
-		)
-	);
+function my_option() {
+	add_option( 'Installed_on' );
 }
-add_action( 'init', 'myplugin_post_type' );
+
+/**
+ * Function to delete option whwn the plugin deactivates.
+ */
+function my_option_delete() {
+	delete_option( 'Installed_on' );
+}
 
 /**
  * Activate the plugin.
  */
 function activate_myplugin() {
-	// Trigger our function that registers the custom post type plugin.
-	myplugin_post_type();
+	// Trigger our function that adds an option type plugin.
+	my_option();
 	// Clear the permalinks after the post type has been registered.
 	flush_rewrite_rules();
 }
@@ -56,8 +57,8 @@ register_activation_hook( __FILE__, 'activate_myplugin' );
  * Deactivation the plugin.
  */
 function deactivate_myplugin() {
-	// Unregister the post type, so the rules are no longer in memory.
-	unregister_post_type( 'book' );
+	// Trigger our function that deletes an option type plugin.
+	my_option_delete();
 	// Clear the permalinks to remove our post type's rules from the database.
 	flush_rewrite_rules();
 }
