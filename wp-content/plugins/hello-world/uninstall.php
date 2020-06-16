@@ -13,7 +13,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 $option_name = 'wporg_option';
 
 // $option_name['delete_all'] contains my option setting to delete all settings.
-if ( 1 === $option_name[ 'delete_all' ] ) {
+if ( 1 === $option_name['delete_all'] ) {
 
 	delete_option( $option_name );
 
