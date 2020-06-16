@@ -27,14 +27,14 @@
  */
 
 /**
- * Creating an option which sets when the plugin activates
+ * Creating an option which sets when the plugin activates.
  */
 function my_option() {
 	add_option( 'Installed_on' );
 }
 
 /**
- * Function to delete option whwn the plugin deactivates.
+ * Function to delete option when the plugin deactivates.
  */
 function my_option_delete() {
 	delete_option( 'Installed_on' );
@@ -46,7 +46,7 @@ function my_option_delete() {
 function activate_myplugin() {
 	// Trigger our function that adds an option type plugin.
 	my_option();
-	// Clear the permalinks after the post type has been registered.
+	// Clear the permalinks after the option has been added.
 	flush_rewrite_rules();
 }
 
@@ -59,7 +59,7 @@ register_activation_hook( __FILE__, 'activate_myplugin' );
 function deactivate_myplugin() {
 	// Trigger our function that deletes an option type plugin.
 	my_option_delete();
-	// Clear the permalinks to remove our post type's rules from the database.
+	// Clear the permalinks to remove our option from the database.
 	flush_rewrite_rules();
 }
 register_deactivation_hook( __FILE__, 'deactivate_myplugin' );
