@@ -46,8 +46,7 @@ function my_option_delete() {
 function activate_myplugin() {
 	// Trigger our function that adds an option type plugin.
 	my_option();
-	// Clear the permalinks after the option has been added.
-	flush_rewrite_rules();
+
 }
 
 register_activation_hook( __FILE__, 'activate_myplugin' );
@@ -59,8 +58,6 @@ register_activation_hook( __FILE__, 'activate_myplugin' );
 function deactivate_myplugin() {
 	// Trigger our function that deletes an option type plugin.
 	my_option_delete();
-	// Clear the permalinks to remove our option from the database.
-	flush_rewrite_rules();
 }
 register_deactivation_hook( __FILE__, 'deactivate_myplugin' );
 
