@@ -71,7 +71,8 @@ register_deactivation_hook( __FILE__, 'deactivate_myplugin' );
  */
 function add_twitter_link( $content ) {
 	if ( is_singular() ) {
-		$link    = "<a href='https://twitter.com/intent/tweet?url=<?=urlencode($url)?>'>Twitter link</a>";
+		$url     = get_permalink();
+		$link    = "<a href='https://twitter.com/intent/tweet?url=" . urlencode( $url ) . "'>Twitter link</a>";
 		$content = $content . $link;
 	}
 	return $content;
