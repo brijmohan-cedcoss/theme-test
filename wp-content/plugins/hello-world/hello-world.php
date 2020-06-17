@@ -84,12 +84,12 @@ add_filter( 'the_content', 'add_twitter_link' );
  *
  * @return $char_count
  */
-function char_count() {
+function char_count( $content ) {
 	global $post;
 	if ( is_singular() ) {
 		$char_count = strlen( wp_strip_all_tags( strip_shortcodes( html_entity_decode( $post->post_content ) ) ) );
 	}
-	return $char_count . 'characters';
+	return $content . $char_count . 'characters';
 }
 
 add_filter( 'the_content', 'char_count' );
