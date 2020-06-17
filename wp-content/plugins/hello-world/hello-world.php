@@ -79,6 +79,17 @@ function add_twitter_link( $content ) {
 }
 add_filter( 'the_content', 'add_twitter_link' );
 
+/**
+ * Counts the number of characters on a single page.
+ *
+ * @return $char_count
+ */
+function char_count() {
+	global $post;
+	if ( is_singular() ) {
+		$char_count = strlen( wp_strip_all_tags( strip_shortcodes( html_entity_decode( $post->post_content ) ) ) );
+	}
+	return $char_count . 'characters';
+}
 
-
-
+add_filter( 'the_content', 'char_count' );
