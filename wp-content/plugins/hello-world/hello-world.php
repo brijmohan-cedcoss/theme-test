@@ -82,6 +82,7 @@ add_filter( 'the_content', 'add_twitter_link' );
 /**
  * Counts the number of characters on a single page.
  *
+ * @param [string] $content is a string.
  * @return $char_count
  */
 function char_count( $content ) {
@@ -89,7 +90,7 @@ function char_count( $content ) {
 	if ( is_singular() ) {
 		$char_count = strlen( wp_strip_all_tags( strip_shortcodes( html_entity_decode( $post->post_content ) ) ) );
 	}
-	return $content . $char_count . 'characters';
+	return $content . '<br>' . $char_count . ' ' . 'Characters';
 }
 
 add_filter( 'the_content', 'char_count' );
