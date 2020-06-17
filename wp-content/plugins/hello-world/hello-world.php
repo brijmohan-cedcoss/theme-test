@@ -1,5 +1,7 @@
 <?php
 /**
+ * Short description for file
+ *
  * @package Myplugin
  * Plugin Name: Hello World
  * Plugin URI:  https://developer.wordpress.org/plugins/the-basics/
@@ -60,6 +62,22 @@ function deactivate_myplugin() {
 	my_option_delete();
 }
 register_deactivation_hook( __FILE__, 'deactivate_myplugin' );
+
+/**
+ * Adding twitter link on the front end.
+ *
+ * @param [string] $content is a string.
+ * @return $content
+ */
+function add_twitter_link( $content ) {
+	if ( is_singular() ) {
+		$link    = "<a href='https://twitter.com/intent/tweet?url=<?=urlencode($url)?>'>Twitter link</a>";
+		$content = $content . $link;
+	}
+	return $content;
+}
+add_filter( 'the_content', 'add_twitter_link' );
+
 
 
 
