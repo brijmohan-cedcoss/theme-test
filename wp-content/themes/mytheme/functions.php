@@ -82,6 +82,8 @@ function mytheme_theme_support() {
 	// Add custom image size used in Cover Template.
 	add_image_size( 'mytheme-fullscreen', 1980, 9999 );
 
+	add_image_size( 'custom_post_thumb', 730, 300, true );
+
 	// Custom logo.
 	$logo_width  = 120;
 	$logo_height = 90;
