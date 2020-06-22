@@ -19,6 +19,9 @@ function themeslug_enqueue_style() {
 	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/vendor/bootstrap/css/bootstrap.min.css', array(), '1.1', false );
 
 	wp_enqueue_style( 'blog-home', get_template_directory_uri() . '/css/blog-home.css', array(), '1.1', false );
+
+	wp_register_script( 'iconify', 'https://code.iconify.design/1/1.0.6/iconify.min.js', array(), '1.1', false );
+	wp_enqueue_script( 'iconify' );
 }
 
 /**
@@ -28,6 +31,7 @@ function themeslug_enqueue_script() {
 	wp_enqueue_script( 'jquery', '', array(), '1.1', true );
 
 	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/vendor/bootstrap/js/bootstrap.bundle.min.js', array(), '1.1', true );
+
 }
 
 add_action( 'wp_enqueue_scripts', 'themeslug_enqueue_style' );
