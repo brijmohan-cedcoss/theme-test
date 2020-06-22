@@ -26,6 +26,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
+<script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
 
 <title>Blog Home - Start Bootstrap Template</title>
 
