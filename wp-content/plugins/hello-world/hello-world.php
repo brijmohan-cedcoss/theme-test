@@ -252,10 +252,10 @@ function wporg_options_page_html() {
 	settings_errors( 'wporg_messages' );
 	?>
 	<div class="wrap">
-	
+
 		<div class="container">
 			<h2>Admin form</h2>
-			
+
 				<div class="form-group">
 					<label for="Name">Name</label>
 					<input type="text" class="form-control" id="txtName" placeholder="Enter Name" name="txtName">
@@ -280,8 +280,7 @@ function wporg_options_page_html() {
 			</tr>
 			</tbody>
 		</table>
-		
-	
+
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 		<form action="options.php" method="post">
 			<?php
@@ -419,51 +418,6 @@ function myown_custom_taxonomy() {
 }
 add_action( 'init', 'myown_custom_taxonomy' );
 
-
-
-/**
- * Enqueue and localize script.
- *
- * @return void
- */
-function my_enqueue() {
-	wp_enqueue_script(
-		'ajax-script',
-		plugins_url( '/js/simple-ajax-example.js', __FILE__ ),
-		array( 'jquery' ),
-		'1.0.0',
-		true,
-	);
-	$title_nonce = wp_create_nonce( 'title_example' );
-	wp_localize_script(
-		'ajax-script',
-		'my_ajax_obj',
-		array(
-			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'nonce'    => $title_nonce,
-		),
-	);
-}
-
-add_action( 'admin_enqueue_scripts', 'my_enqueue' );
-
-/**
- * Function for ajax request handler
- *
- * @return void
- */
-function my_ajax_handler() {
-	check_ajax_referer( 'title_example' );
-	update_user_meta( get_current_user_id(), 'title_preference', $_POST['title'] );
-	$args      = array(
-		'tag' => $_POST['title'],
-	);
-	$the_query = new WP_Query( $args );
-	echo $_POST['title'] . ' (' . $the_query->post_count . ') ';
-	wp_die(); // all ajax handlers should die when finished.
-}
-add_action( 'wp_ajax_my_tag_count', 'my_ajax_handler' );
-
 /**
  * Enqueue and localize script.
  *
@@ -491,7 +445,7 @@ function example_ajax_enqueue() {
 	);
 
 }
-add_action( 'admin_enqueue_scripts', 'example_ajax_enqueue' );
+add_action( 'wp_enqueue_scripts', 'example_ajax_enqueue' );
 
 /**
  * Function for ajax request handler
@@ -499,33 +453,33 @@ add_action( 'admin_enqueue_scripts', 'example_ajax_enqueue' );
  * @return void
  */
 function example_ajax_request() {
-	$nonce = $_POST['nonce'];
+	$nonce = isset( $_POST['nonce'] ) ? wp_unslash( $_POST['nonce'] ) : ' ';
 
 	if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
 		die( 'Nonce value cannot be verified.' );
 	}
- 
-	// The $_REQUEST contains all the data sent via ajax.
-	if ( isset($_POST) ) {
 
-		$fruit = $_POST['fruit'];
+	// The $_REQUEST contains all the data sent via ajax.
+	if ( isset( $_POST ) ) {
+
+		$fruit = isset( $_POST['fruit'] ) ? wp_unslash( $_POST['fruit'] ) : ' ';
 
 		// Let's take the data that was sent and do something with it.
-		if ( $fruit == 'Banana' ) {
+		if ( 'Banana' === $fruit ) {
 			$fruit = 'Apple';
 		}
 
 		// Now we'll return it to the javascript function.
 		// Anything outputted will be returned in the response.
-		echo $fruit;
- 
+		echo esc_html( $fruit );
+
 		// If you're debugging, it might be useful to see what was sent in the $_REQUEST.
 		// print_r($_REQUEST);.
 
 	}
 
 	// Always die in functions echoing ajax content.
-   		die();
+	die();
 }
 
 add_action( 'wp_ajax_example_ajax_request', 'example_ajax_request' );
@@ -534,70 +488,39 @@ add_action( 'wp_ajax_example_ajax_request', 'example_ajax_request' );
 add_action( 'wp_ajax_nopriv_example_ajax_request', 'example_ajax_request' );
 
 /**
- * Enqueue and localize script.
- *
- * @return void
- */
-function form_ajax_enqueue() {
-
-	// Enqueue javascript on the frontend.
-	wp_enqueue_script(
-		'form-ajax-script',
-		plugins_url( '/js/myjqform.js', __FILE__ ),
-		array( 'jquery' ),
-		'1.0.0',
-		true,
-	);
-
-	// The wp_localize_script allows us to output the ajax_url path for our script to use.
-	wp_localize_script(
-		'form-ajax-script',
-		'form_ajax_obj',
-		array(
-			'ajaxurl' => admin_url( 'admin-ajax.php' ),
-			'nonce'   => wp_create_nonce( 'ajax-nonce-form' ),
-		)
-	);
-
-}
-add_action( 'admin_enqueue_scripts', 'form_ajax_enqueue' );
-
-/**
  * Function for ajax request handler
  *
  * @return void
  */
 function form_ajax_handler() {
-	$nonce = $_GET['nonce'];
+	$nonce = isset( $_GET['nonce'] ) ? wp_unslash( $_GET['nonce'] ) : ' ';
 
-	if ( ! wp_verify_nonce( $nonce, 'ajax-nonce-form' ) ) {
+	if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
 		die( 'Nonce value cannot be verified.' );
 	}
- 
-	// The $_REQUEST contains all the data sent via ajax.
-	if ( isset( $_GET) ) {
 
-		$name_new =  $_GET['name'];
-		$email_new = $_GET['email'];
+	// The $_REQUEST contains all the data sent via ajax.
+	if ( isset( $_GET ) ) {
+
+		$name_new  = isset( $_GET['name'] ) ? wp_unslash( $_GET['name'] ) : ' ';
+		$email_new = isset( $_GET['email'] ) ? wp_unslash( $_GET['email'] ) : ' ';
 
 		// Let's take the data that was sent and do something with it.
-		if ( $name_new == 'Brij' ) {
+		if ( 'Brij' === $name_new ) {
 			$name_new = 'Mohan';
-		}else {
-			$name_new =  $_GET['name'];
 		}
 
 		// Now we'll return it to the javascript function.
 		// Anything outputted will be returned in the response.
-		echo $name_new . " " . $email_new;
- 
+		echo esc_html( $name_new . ' ' . $email_new );
+
 		// If you're debugging, it might be useful to see what was sent in the $_REQUEST.
 		// print_r($_REQUEST);.
 
 	}
 
 	// Always die in functions echoing ajax content.
-   		die();
+	die();
 }
 
 add_action( 'wp_ajax_form_ajax_request', 'form_ajax_handler' );
@@ -610,25 +533,117 @@ add_action( 'wp_ajax_nopriv_form_ajax_request', 'form_ajax_handler' );
  * @return $content
  */
 function submit_form( $content ) {
-	if ( is_single( 2064 ) && 'product' === get_post_type() ) { 
+	if ( is_page( 2084 ) ) {
 		$formhtml = '<div class="container">
-                        <h2>Query form</h2>
-                        <div class="form-group">
-                            <label for="Name">Name:</label>
-                            <input type="text" class="form-control" id="formName" placeholder="Enter Your Name" name="formName">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" class="form-control" id="formEmail" placeholder="Enter Email" name="formEmail">
-                        </div>
-                        <div class="form-group">
-                            <label for="query">Your Query:</label>
-                            <textarea name="formQuery" id="formQuery" class="form-control" cols="30" rows="10"></textarea>
-                        </div>
-                        <button type="submit" id="formName" class="btn btn-primary">Submit</button>
-                    </div>';			
+						<h2>Query form</h2>
+						<div class="form-group">
+							<label for="Name">Name:</label>
+							<input type="text" class="form-control" id="formName" placeholder="Enter Your Name" name="formName">
+						</div>
+						<div class="form-group">
+							<label for="email">Email:</label>
+							<input type="email" class="form-control" id="formEmail" placeholder="Enter Email" name="formEmail">
+						</div>
+						<div class="form-group">
+							<label for="query">Your Query:</label>
+							<textarea name="formQuery" id="formQuery" class="form-control" cols="30" rows="10"></textarea>
+						</div>
+						<button type="submit" id="submitform" class="btn btn-primary">Submit</button>
+					</div>';
 		$content  = $content . '<br>' . $formhtml . '<br>';
 	}
 	return $content;
 }
 add_filter( 'the_content', 'submit_form' );
+
+/**
+ * Creating Custom post type.
+ */
+function myown_custom_post_feedback() {
+	$labels = array(
+		'name'               => __( 'Feedbacks', 'textdomain' ),
+		'singular_name'      => __( 'Feedback', 'textdomain' ),
+		'add_new'            => 'Add New Feedback',
+		'all_items'          => 'All Feedbacks',
+		'add_new_item'       => 'Add Feedback',
+		'edit_item'          => 'Edit Feedback',
+		'new_item'           => 'New Feedback',
+		'view_item'          => 'View Feedback',
+		'search_item'        => 'Search Feedback',
+		'not_found'          => 'No Items Found',
+		'not_found_in_trash' => 'No Items Found In Trash',
+		'parent_item_colon'  => 'Parent Item',
+	);
+
+	register_post_type(
+		'feedback',
+		array(
+			'labels'              => $labels,
+			'public'              => true,
+			'has_archive'         => true,
+			'publicly_queryable'  => true,
+			'query_var'           => true,
+			'rewrite'             => true,
+			'capability_type'     => 'post',
+			'hierarchical'        => false,
+			'show_in_rest'        => true,
+			'show_in_admin_bar'   => true,
+			'description'         => 'Recipe custom post type.',
+			'supports'            => array(
+				'title',
+				'editor',
+				'excerpt',
+				'thumbnail',
+				'revisions',
+			),
+			'menu_position'       => 5,
+			'exclude_from_search' => false,
+		)
+	);
+}
+add_action( 'init', 'myown_custom_post_feedback' );
+
+/**
+ * Function for ajax request handler
+ *
+ * @return void
+ */
+function submit_form_ajax_handler() {
+	$nonce = isset( $_POST['nonce'] ) ? wp_unslash( $_POST['nonce'] ) : ' ';
+
+	if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
+		die( 'Nonce value cannot be verified.' );
+	}
+
+	// The $_REQUEST contains all the data sent via ajax.
+	if ( isset( $_POST ) ) {
+		$name_new  = isset( $_POST['name'] ) ? wp_unslash( $_POST['name'] ) : ' ';
+		$email_new = isset( $_POST['email'] ) ? wp_unslash( $_POST['email'] ) : ' ';
+		$info_new  = isset( $_POST['msg'] ) ? wp_unslash( $_POST['msg'] ) : ' ';
+
+		$user_id = get_current_user_id();
+
+		// Create post object.
+		$my_post = array(
+			'post_type'    => 'feedback',
+			'post_title'   => wp_strip_all_tags( $name_new ),
+			'post_content' => $info_new . '<br>' . "<small><a href='" . $email_new . "'>Email Here</a></small>",
+			'post_status'  => 'publish',
+			'post_author'  => $user_id,
+		);
+
+		// Insert the post into the database.
+		$post_ID = wp_insert_post( $my_post );
+		echo esc_html( $post_ID );
+
+		// If you're debugging, it might be useful to see what was sent in the $_REQUEST.
+		// print_r($_REQUEST);.
+
+	}
+
+	// Always die in functions echoing ajax content.
+	die();
+}
+
+add_action( 'wp_ajax_submit_form_ajax_request', 'submit_form_ajax_handler' );
+add_action( 'wp_ajax_nopriv_submit_form_ajax_request', 'submit_form_ajax_handler' );

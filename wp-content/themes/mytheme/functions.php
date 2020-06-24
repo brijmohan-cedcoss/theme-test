@@ -22,6 +22,7 @@ function themeslug_enqueue_style() {
 
 	wp_register_script( 'iconify', 'https://code.iconify.design/1/1.0.6/iconify.min.js', array(), '1.1', false );
 	wp_enqueue_script( 'iconify' );
+	
 }
 
 /**
