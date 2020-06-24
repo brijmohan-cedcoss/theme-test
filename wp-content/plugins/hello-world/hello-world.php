@@ -453,7 +453,7 @@ add_action( 'wp_enqueue_scripts', 'example_ajax_enqueue' );
  * @return void
  */
 function example_ajax_request() {
-	$nonce = isset( $_POST['nonce'] ) ? wp_unslash( $_POST['nonce'] ) : ' ';
+	$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : ' ';
 
 	if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
 		die( 'Nonce value cannot be verified.' );
@@ -462,7 +462,7 @@ function example_ajax_request() {
 	// The $_REQUEST contains all the data sent via ajax.
 	if ( isset( $_POST ) ) {
 
-		$fruit = isset( $_POST['fruit'] ) ? wp_unslash( $_POST['fruit'] ) : ' ';
+		$fruit = isset( $_POST['fruit'] ) ? sanitize_text_field( wp_unslash( $_POST['fruit'] ) ) : ' ';
 
 		// Let's take the data that was sent and do something with it.
 		if ( 'Banana' === $fruit ) {
@@ -493,7 +493,7 @@ add_action( 'wp_ajax_nopriv_example_ajax_request', 'example_ajax_request' );
  * @return void
  */
 function form_ajax_handler() {
-	$nonce = isset( $_GET['nonce'] ) ? wp_unslash( $_GET['nonce'] ) : ' ';
+	$nonce = isset( $_GET['nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['nonce'] ) ) : ' ';
 
 	if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
 		die( 'Nonce value cannot be verified.' );
@@ -502,8 +502,8 @@ function form_ajax_handler() {
 	// The $_REQUEST contains all the data sent via ajax.
 	if ( isset( $_GET ) ) {
 
-		$name_new  = isset( $_GET['name'] ) ? wp_unslash( $_GET['name'] ) : ' ';
-		$email_new = isset( $_GET['email'] ) ? wp_unslash( $_GET['email'] ) : ' ';
+		$name_new  = isset( $_GET['name'] ) ? sanitize_text_field( wp_unslash( $_GET['name'] ) ) : ' ';
+		$email_new = isset( $_GET['email'] ) ? sanitize_text_field( wp_unslash( $_GET['email'] ) ) : ' ';
 
 		// Let's take the data that was sent and do something with it.
 		if ( 'Brij' === $name_new ) {
@@ -609,7 +609,7 @@ add_action( 'init', 'myown_custom_post_feedback' );
  * @return void
  */
 function submit_form_ajax_handler() {
-	$nonce = isset( $_POST['nonce'] ) ? wp_unslash( $_POST['nonce'] ) : ' ';
+	$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : ' ';
 
 	if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
 		die( 'Nonce value cannot be verified.' );
@@ -617,9 +617,9 @@ function submit_form_ajax_handler() {
 
 	// The $_REQUEST contains all the data sent via ajax.
 	if ( isset( $_POST ) ) {
-		$name_new  = isset( $_POST['name'] ) ? wp_unslash( $_POST['name'] ) : ' ';
-		$email_new = isset( $_POST['email'] ) ? wp_unslash( $_POST['email'] ) : ' ';
-		$info_new  = isset( $_POST['msg'] ) ? wp_unslash( $_POST['msg'] ) : ' ';
+		$name_new  = isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : ' ';
+		$email_new = isset( $_POST['email'] ) ? sanitize_text_field( wp_unslash( $_POST['email'] ) ) : ' ';
+		$info_new  = isset( $_POST['info'] ) ? sanitize_text_field( wp_unslash( $_POST['info'] ) ) : ' ';
 
 		$user_id = get_current_user_id();
 
