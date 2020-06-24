@@ -252,6 +252,36 @@ function wporg_options_page_html() {
 	settings_errors( 'wporg_messages' );
 	?>
 	<div class="wrap">
+	
+		<div class="container">
+			<h2>Admin form</h2>
+			
+				<div class="form-group">
+					<label for="Name">Name</label>
+					<input type="text" class="form-control" id="txtName" placeholder="Enter Name" name="txtName">
+				</div>
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input type="email" class="form-control" id="txtEmail" placeholder="Enter Email" name="txtEmail">
+				</div>
+				<button type="submit" id="formName" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+
+		<table>
+			<tbody>
+			<tr>
+				<td><input class="pref" checked="checked" name="book" type="radio" value="Sycamore Row" />Sycamore Row</td>
+				<td>John Grisham</td>
+			</tr>
+			<tr>
+				<td><input class="pref" name="book" type="radio" value="Dark Witch" />Dark Witch</td>
+				<td>Nora Roberts</td>
+			</tr>
+			</tbody>
+		</table>
+		
+	
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 		<form action="options.php" method="post">
 			<?php
@@ -388,3 +418,217 @@ function myown_custom_taxonomy() {
 	);
 }
 add_action( 'init', 'myown_custom_taxonomy' );
+
+
+
+/**
+ * Enqueue and localize script.
+ *
+ * @return void
+ */
+function my_enqueue() {
+	wp_enqueue_script(
+		'ajax-script',
+		plugins_url( '/js/simple-ajax-example.js', __FILE__ ),
+		array( 'jquery' ),
+		'1.0.0',
+		true,
+	);
+	$title_nonce = wp_create_nonce( 'title_example' );
+	wp_localize_script(
+		'ajax-script',
+		'my_ajax_obj',
+		array(
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'nonce'    => $title_nonce,
+		),
+	);
+}
+
+add_action( 'admin_enqueue_scripts', 'my_enqueue' );
+
+/**
+ * Function for ajax request handler
+ *
+ * @return void
+ */
+function my_ajax_handler() {
+	check_ajax_referer( 'title_example' );
+	update_user_meta( get_current_user_id(), 'title_preference', $_POST['title'] );
+	$args      = array(
+		'tag' => $_POST['title'],
+	);
+	$the_query = new WP_Query( $args );
+	echo $_POST['title'] . ' (' . $the_query->post_count . ') ';
+	wp_die(); // all ajax handlers should die when finished.
+}
+add_action( 'wp_ajax_my_tag_count', 'my_ajax_handler' );
+
+/**
+ * Enqueue and localize script.
+ *
+ * @return void
+ */
+function example_ajax_enqueue() {
+
+	// Enqueue javascript on the frontend.
+	wp_enqueue_script(
+		'example-ajax-script',
+		plugins_url( '/js/myjq.js', __FILE__ ),
+		array( 'jquery' ),
+		'1.0.0',
+		true,
+	);
+
+	// The wp_localize_script allows us to output the ajax_url path for our script to use.
+	wp_localize_script(
+		'example-ajax-script',
+		'example_ajax_obj',
+		array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'nonce'   => wp_create_nonce( 'ajax-nonce' ),
+		)
+	);
+
+}
+add_action( 'admin_enqueue_scripts', 'example_ajax_enqueue' );
+
+/**
+ * Function for ajax request handler
+ *
+ * @return void
+ */
+function example_ajax_request() {
+	$nonce = $_POST['nonce'];
+
+	if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
+		die( 'Nonce value cannot be verified.' );
+	}
+ 
+	// The $_REQUEST contains all the data sent via ajax.
+	if ( isset($_POST) ) {
+
+		$fruit = $_POST['fruit'];
+
+		// Let's take the data that was sent and do something with it.
+		if ( $fruit == 'Banana' ) {
+			$fruit = 'Apple';
+		}
+
+		// Now we'll return it to the javascript function.
+		// Anything outputted will be returned in the response.
+		echo $fruit;
+ 
+		// If you're debugging, it might be useful to see what was sent in the $_REQUEST.
+		// print_r($_REQUEST);.
+
+	}
+
+	// Always die in functions echoing ajax content.
+   		die();
+}
+
+add_action( 'wp_ajax_example_ajax_request', 'example_ajax_request' );
+
+// If you wanted to also use the function for non-logged in users (in a theme for example).
+add_action( 'wp_ajax_nopriv_example_ajax_request', 'example_ajax_request' );
+
+/**
+ * Enqueue and localize script.
+ *
+ * @return void
+ */
+function form_ajax_enqueue() {
+
+	// Enqueue javascript on the frontend.
+	wp_enqueue_script(
+		'form-ajax-script',
+		plugins_url( '/js/myjqform.js', __FILE__ ),
+		array( 'jquery' ),
+		'1.0.0',
+		true,
+	);
+
+	// The wp_localize_script allows us to output the ajax_url path for our script to use.
+	wp_localize_script(
+		'form-ajax-script',
+		'form_ajax_obj',
+		array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'nonce'   => wp_create_nonce( 'ajax-nonce-form' ),
+		)
+	);
+
+}
+add_action( 'admin_enqueue_scripts', 'form_ajax_enqueue' );
+
+/**
+ * Function for ajax request handler
+ *
+ * @return void
+ */
+function form_ajax_handler() {
+	$nonce = $_GET['nonce'];
+
+	if ( ! wp_verify_nonce( $nonce, 'ajax-nonce-form' ) ) {
+		die( 'Nonce value cannot be verified.' );
+	}
+ 
+	// The $_REQUEST contains all the data sent via ajax.
+	if ( isset( $_GET) ) {
+
+		$name_new =  $_GET['name'];
+		$email_new = $_GET['email'];
+
+		// Let's take the data that was sent and do something with it.
+		if ( $name_new == 'Brij' ) {
+			$name_new = 'Mohan';
+		}else {
+			$name_new =  $_GET['name'];
+		}
+
+		// Now we'll return it to the javascript function.
+		// Anything outputted will be returned in the response.
+		echo $name_new . " " . $email_new;
+ 
+		// If you're debugging, it might be useful to see what was sent in the $_REQUEST.
+		// print_r($_REQUEST);.
+
+	}
+
+	// Always die in functions echoing ajax content.
+   		die();
+}
+
+add_action( 'wp_ajax_form_ajax_request', 'form_ajax_handler' );
+add_action( 'wp_ajax_nopriv_form_ajax_request', 'form_ajax_handler' );
+
+/**
+ * Adding Query form on the Submit form post(Custom post type=product).
+ *
+ * @param [string] $content is a string.
+ * @return $content
+ */
+function submit_form( $content ) {
+	if ( is_single( 2064 ) && 'product' === get_post_type() ) { 
+		$formhtml = '<div class="container">
+                        <h2>Query form</h2>
+                        <div class="form-group">
+                            <label for="Name">Name:</label>
+                            <input type="text" class="form-control" id="formName" placeholder="Enter Your Name" name="formName">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="formEmail" placeholder="Enter Email" name="formEmail">
+                        </div>
+                        <div class="form-group">
+                            <label for="query">Your Query:</label>
+                            <textarea name="formQuery" id="formQuery" class="form-control" cols="30" rows="10"></textarea>
+                        </div>
+                        <button type="submit" id="formName" class="btn btn-primary">Submit</button>
+                    </div>';			
+		$content  = $content . '<br>' . $formhtml . '<br>';
+	}
+	return $content;
+}
+add_filter( 'the_content', 'submit_form' );
