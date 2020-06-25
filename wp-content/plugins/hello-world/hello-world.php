@@ -624,17 +624,17 @@ function submit_form_ajax_handler() {
 		$user_id = get_current_user_id();
 
 		// Create post object.
-		$my_post = array(
+		$my_feedback_post = array(
 			'post_type'    => 'feedback',
 			'post_title'   => wp_strip_all_tags( $name_new ),
-			'post_content' => $info_new . '<br>' . "<small><a href='" . $email_new . "'>Email Here</a></small>",
+			'post_content' => $info_new . '<br>' . "<small><a href='" . $email_new . "'>Reply Via Email</a></small>",
 			'post_status'  => 'publish',
 			'post_author'  => $user_id,
 		);
 
 		// Insert the post into the database.
-		$post_ID = wp_insert_post( $my_post );
-		echo esc_html( $post_ID );
+		$post_ID = wp_insert_post( $my_feedback_post );
+		echo wp_json_encode( $post_ID . ' Added as feedback' );
 
 		// If you're debugging, it might be useful to see what was sent in the $_REQUEST.
 		// print_r($_REQUEST);.

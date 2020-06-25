@@ -4,63 +4,72 @@ jQuery(document).ready(function($) {
     var fruit = 'Banana';
     // This does the ajax request
     $.ajax({
-		url: example_ajax_obj.ajaxurl,
+		url    : example_ajax_obj.ajaxurl,
 		method : 'post',
-        data: {
+        data   : {
             'action': 'example_ajax_request',
             'fruit' : fruit,
             'nonce' : example_ajax_obj.nonce
         },
-        success:function(data) {
+        success:function( data ) {
             // This outputs the result of the ajax request
-            console.log(data);
+            console.log( data );
         },
-        error: function(errorThrown){
-            console.log(errorThrown);
+        error  : function( errorThrown ){
+            console.log( errorThrown );
         }
     });  
     
+    //Ajax request for the form on admin settings page.
     $('#formName').on('click', function(){
-        var name = $('#txtName').val();
+        var name  = $('#txtName').val();
         var email = $('#txtEmail').val();
-    
+        // This does the ajax request
         $.ajax({
-            url: example_ajax_obj.ajaxurl,
-            method: 'GET',
+            url    : example_ajax_obj.ajaxurl,
+            method : 'GET',
             
-            data:{
+            data   :{
                 'action': 'form_ajax_request',
                 'name'  : name,
                 'email' : email,
                 'nonce' : example_ajax_obj.nonce
             },
-            success:function(response) {
+            success :function(response) {
+                // This outputs the result of the ajax request
                 console.log(response);
             }
         });
     }); 
      
+    //Ajax request for feedback form on frontend.
     $('#submitform').on('click', function(){
-        var name = $('#formName').val();
+        var name  = $('#formName').val();
         var email = $('#formEmail').val();
-        var msg = $('#formQuery').val();
-    
+        var msg   = $('#formQuery').val();
+        // This does the ajax request
         $.ajax({
-     	   url: example_ajax_obj.ajaxurl,
-     	   method: 'post',
+     	    url    : example_ajax_obj.ajaxurl,
+     	    method : 'post',
             
-     	   data:{
-     		   'action': 'submit_form_ajax_request',
-     		   'name'  : name,
+     	    data   :{
+     		    'action': 'submit_form_ajax_request',
+     		    'name'  : name,
                 'email' : email,
-                'info'   : msg,
-     		   'nonce' : example_ajax_obj.nonce
+                'info'  : msg,
+     		    'nonce' : example_ajax_obj.nonce
             },
             
-     	   success:function(response) {
-                console.log(response);
-                console.log('Added to feedback');
-     	   }
+     	    success : function( response ) {
+                 // This outputs the result of the ajax request
+                console.log( JSON.parse( response ) );
+                console.log( 'Added to feedback' );
+            },
+
+            error  : function( errorThrown ) {
+                console.log( errorThrown );
+            }
+             
         });
     });  
 });
