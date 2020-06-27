@@ -43,6 +43,8 @@
 			<nav class="classy-navbar justify-content-between" id="pocaNav">
 
 			<!-- Logo -->
+			<?php
+			the_custom_logo(); ?>
 			<a class="nav-brand" href=""><img src="<?php echo get_template_directory_uri(); ?>/img/core-img/logo.png" alt=""></a>
 
 			<!-- Navbar Toggler -->
@@ -61,13 +63,13 @@
 				<!-- Nav Start -->
 				<div class="classynav">
 				<?php
-			wp_nav_menu(
-				array(
-					'theme_location' => 'menu-1',
-					'menu_id'        => 'primary-menu',
-				)
-			);
-			?>
+					wp_nav_menu(
+						array(
+							'theme_location' => 'menu-1',
+							'menu_id'        => 'primary-menu',
+						)
+					);
+				?>
 
 				<!-- Top Search Area -->
 				<div class="top-search-area">

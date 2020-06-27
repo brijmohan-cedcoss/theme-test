@@ -47,6 +47,9 @@ if ( ! function_exists( 'poca_setup' ) ) :
 		 */
 		add_theme_support( 'post-thumbnails' );
 
+		// Set post thumbnail size.
+		set_post_thumbnail_size( 1200, 9999 );
+
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus(
 			array(
@@ -183,18 +186,6 @@ function poca_scripts() {
 
 }
 add_action( 'wp_enqueue_scripts', 'poca_scripts' );
-
-/**
- * Enqueue styles.
- */
-function poca_styles() {
-
-	
-	
-	// wp_register_style( 'magnific', 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css', array(), _S_VERSION );
-	// wp_enqueue_style( 'magnific' );
-}
-add_action( 'wp_enqueue_scripts', 'poca_styles' );
 
 /**
  * Implement the Custom Header feature.
