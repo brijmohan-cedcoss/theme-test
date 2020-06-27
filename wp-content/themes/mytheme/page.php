@@ -81,9 +81,9 @@ get_header();
 		</div>
 		<!-- /.row -->
 		<?php if ( get_theme_mod( 'basic-author-callout-display' ) === 'Yes' ) { ?>
-			<div class="col-9 ">
+			<div class="col-12 " align="center">
 				<div class="author-image">
-					<img src="<?php echo esc_html( wp_get_attachment_url( get_theme_mod( 'basic-author-callout-image' ) ) ); ?>" alt="Author Image">
+					<img src="<?php echo esc_html( wp_get_attachment_url( get_theme_mod( 'basic-author-callout-image' ) ) ); ?>" width=50px height=50px  alt="Author Image">
 				</div>
 				<div class="author-content">
 					<?php

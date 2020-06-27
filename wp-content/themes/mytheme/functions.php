@@ -22,11 +22,11 @@ function themeslug_enqueue_style() {
 
 	wp_register_script( 'iconify', 'https://code.iconify.design/1/1.0.6/iconify.min.js', array(), '1.1', false );
 	wp_enqueue_script( 'iconify' );
-	
+
 }
 
 /**
- * Enqueue scripts.
+ * Enqueue scripts
  */
 function themeslug_enqueue_script() {
 	wp_enqueue_script( 'jquery', '', array(), '1.1', true );

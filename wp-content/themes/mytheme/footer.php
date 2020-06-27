@@ -21,7 +21,7 @@
 		<div class="container">
 			<div class="Button" align="center">
 				<?php $option = get_option( 'wporg_options' ); ?>
-				<a class="col-lg-9" href="<?php echo esc_html( $option['wporg_field_facebook'] ); ?>"><span class="iconify" data-icon="dashicons:facebook-alt" data-inline="false" data-width="50" data-height="50"></span></a>
+				<a href="<?php echo esc_html( $option['wporg_field_facebook'] ); ?>"><span class="iconify" data-icon="dashicons:facebook-alt" data-inline="false" data-width="50" data-height="50"></span></a>
 				<a href="<?php echo esc_html( $option['wporg_field_twitter'] ); ?>"><span class="iconify" data-icon="dashicons:twitter" data-inline="false" data-width="50" data-height="50"></span></a>
 			</div>
 			<p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>

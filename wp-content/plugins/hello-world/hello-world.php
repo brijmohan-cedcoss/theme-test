@@ -348,6 +348,7 @@ function myown_custom_post_type() {
 			'hierarchical'        => false,
 			'show_in_rest'        => true,
 			'show_in_admin_bar'   => true,
+			'menu_icon'           => 'dashicons-cart',
 			'description'         => 'Recipe custom post type.',
 			'supports'            => array(
 				'title',
@@ -428,7 +429,7 @@ function example_ajax_enqueue() {
 	// Enqueue javascript on the frontend.
 	wp_enqueue_script(
 		'example-ajax-script',
-		plugins_url( '/js/myjq.js', __FILE__ ),
+		plugins_url( '/js/hello-world-script.js', __FILE__ ),
 		array( 'jquery' ),
 		'1.0.0',
 		true,
@@ -533,7 +534,7 @@ add_action( 'wp_ajax_nopriv_form_ajax_request', 'form_ajax_handler' );
  * @return $content
  */
 function submit_form( $content ) {
-	if ( is_page( 2084 ) ) {
+	if ( is_page( 2084 ) || is_single( 2064 ) ) {
 		$formhtml = '<div class="container">
 						<h2>Query form</h2>
 						<div class="form-group">
@@ -588,6 +589,7 @@ function myown_custom_post_feedback() {
 			'hierarchical'        => false,
 			'show_in_rest'        => true,
 			'show_in_admin_bar'   => true,
+			'menu_icon'           => 'dashicons-admin-users',
 			'description'         => 'Recipe custom post type.',
 			'supports'            => array(
 				'title',
@@ -596,6 +598,7 @@ function myown_custom_post_feedback() {
 				'thumbnail',
 				'revisions',
 			),
+			'taxonomies'          => array( 'category', 'post_tag' ),
 			'menu_position'       => 5,
 			'exclude_from_search' => false,
 		)
@@ -647,3 +650,4 @@ function submit_form_ajax_handler() {
 
 add_action( 'wp_ajax_submit_form_ajax_request', 'submit_form_ajax_handler' );
 add_action( 'wp_ajax_nopriv_submit_form_ajax_request', 'submit_form_ajax_handler' );
+
