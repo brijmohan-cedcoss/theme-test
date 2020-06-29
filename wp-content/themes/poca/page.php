@@ -19,7 +19,7 @@ get_header();
     <div class="container h-100">
       <div class="row h-100 align-items-center">
         <div class="col-12">
-          <h2 class="title mt-70">Contact</h2>
+          <h2 class="title mt-70"><?php the_title(); ?></h2>
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@ get_header();
   </div>
   <!-- ***** Breadcrumb Area End ***** -->
 
-  <!-- ***** Contact Area Start ***** -->
+  <!-- ***** Content Area Start ***** -->
   <section class="poca-contact-area mt-50 mb-100">
     <div class="container">
       <div class="row">
@@ -57,7 +57,7 @@ get_header();
       </div>
     </div>
   </section>
-  <!-- ***** Contact Area End ***** -->
+  <!-- ***** Content Area End ***** -->
 	
 
 <?php

@@ -19,59 +19,75 @@ if ( post_password_required() ) {
 	return;
 }
 ?>
-
-<div id="comments" class="comments-area">
-
+	<!-- Comments Area -->
+	<div class="comment_area mb-50 clearfix">
 	<?php
 	// You can start editing here -- including this comment!
-	if ( have_comments() ) :
+	if ( have_comments() ) {
 		?>
-		<h2 class="comments-title">
-			<?php
-			$poca_comment_count = get_comments_number();
-			if ( '1' === $poca_comment_count ) {
-				printf(
-					/* translators: 1: title. */
-					esc_html__( 'One thought on &ldquo;%1$s&rdquo;', 'poca' ),
-					'<span>' . wp_kses_post( get_the_title() ) . '</span>'
-				);
-			} else {
-				printf( 
-					/* translators: 1: comment count number, 2: title. */
-					esc_html( _nx( '%1$s thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', $poca_comment_count, 'comments title', 'poca' ) ),
-					number_format_i18n( $poca_comment_count ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					'<span>' . wp_kses_post( get_the_title() ) . '</span>'
-				);
-			}
-			?>
-		</h2><!-- .comments-title -->
+		<h5 class="title"><?php
+							printf(
+							esc_html(/* translators: %s: search term */
+								_nx(
+									'%s Comment',
+									'%s Comments',
+									get_comments_number(),
+									'comments title',
+									'mytheme'
+								)
+							),
+							esc_html( number_format_i18n( get_comments_number() ) ),
+							'<span>' . esc_html( get_the_title() ) . '</span>'
+							);
+						?>
+		</h5>
 
-		<?php the_comments_navigation(); ?>
 
-		<ol class="comment-list">
-			<?php
+		<ol>
+		<?php
 			wp_list_comments(
 				array(
 					'style'      => 'ol',
 					'short_ping' => true,
+					'avatar_size' => 74,
 				)
 			);
 			?>
-		</ol><!-- .comment-list -->
-
+			
+		</ol>
 		<?php
-		the_comments_navigation();
-
 		// If comments are closed and there are comments, let's leave a little note, shall we?
 		if ( ! comments_open() ) :
 			?>
 			<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'poca' ); ?></p>
 			<?php
 		endif;
+		}
+		?>
+	</div>
+		<?php comment_form(); ?>
+			<!-- Leave A Reply -->
+	<div class="contact-form">
+		<h5 class="mb-30">Leave A Comment</h5>
 
-	endif; // Check for have_comments().
+		<!-- Form -->
+		<!-- <form action="#" method="post">
+			<div class="row">
+				<div class="col-lg-6">
+					<input type="text" name="message-name" class="form-control mb-30" placeholder="Name">
+				</div>
+				<div class="col-lg-6">
+					<input type="email" name="message-email" class="form-control mb-30" placeholder="Email">
+				</div>
+				<div class="col-12">
+					<textarea name="message" class="form-control mb-30" placeholder="Comment"></textarea>
+				</div>
+				<div class="col-12">
+					<button type="submit" class="btn poca-btn mt-30">Post Comment</button>
+				</div>
+			</div>
+		</form> -->
 
-	comment_form();
-	?>
+	</div>
 
-</div><!-- #comments -->
+<!-- #comments -->
