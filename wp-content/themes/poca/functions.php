@@ -224,14 +224,13 @@ new Poca_Categories();
 /**
  * Function to add icon class to category list.
  *
- * @param [type] $output
- * @param [type] $args
- * @return void
+ * @param [type] $output is the content of wp_list_categories().
+ * @return $output
  */
-function my_list_categories( $output, $args ) {
+function add_icon_list_categories( $output ) {
 
 	$pattern = '/(<a.*?>)/';
-        $replacement = '$1<i class="fa fa-angle-double-right" aria-hidden="true"></i> ';
-        return preg_replace( $pattern, $replacement, $output );
+    $replacement = '$1<i class="fa fa-angle-double-right" aria-hidden="true"></i> ';
+    return preg_replace( $pattern, $replacement, $output );
 }
-add_filter( 'wp_list_categories', 'my_list_categories', 10, 2 );
+add_filter( 'wp_list_categories', 'add_icon_list_categories', 10, 1 );
