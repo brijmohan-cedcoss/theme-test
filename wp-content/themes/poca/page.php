@@ -31,7 +31,7 @@ get_header();
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Contact</li>
+              <li class="breadcrumb-item active" aria-current="page"><?php the_title(); ?></li>
             </ol>
           </nav>
         </div>
@@ -43,17 +43,20 @@ get_header();
   <!-- ***** Content Area Start ***** -->
   <section class="poca-contact-area mt-50 mb-100">
     <div class="container">
-      <div class="row">
-		<?php
-			while ( have_posts() ) {
-				the_post();
-				the_content(); 
-				// If comments are open or we have at least one comment, load up the comment template.
-				if ( comments_open() || get_comments_number() ) {
-					get_comments();
-				}
-			}	
-		?>
+      <div class="row justify-content-center">
+        
+          <?php
+            while ( have_posts() ) {
+              the_post();
+              the_post_thumbnail();
+              the_content(); 
+              // If comments are open or we have at least one comment, load up the comment template.
+              if ( comments_open() || get_comments_number() ) {
+                get_comments();
+              }
+            }	
+          ?>
+         
       </div>
     </div>
   </section>

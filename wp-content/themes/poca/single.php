@@ -14,7 +14,7 @@ get_header();
     <div class="container h-100">
       <div class="row h-100 align-items-center">
         <div class="col-12">
-          <h2 class="title mt-70">Blog Single</h2>
+          <h2 class="title mt-70"><?php the_title(); ?></h2>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@ get_header();
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
               <li class="breadcrumb-item"><a href="#">Blog</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Blog Single</li>
+              <li class="breadcrumb-item active" aria-current="page"><?php the_title(); ?></li>
             </ol>
           </nav>
         </div>
@@ -78,7 +78,7 @@ get_header();
                 <div class="post-catagories d-flex align-items-center">
                   <h6>Categories:</h6>
                   <ul class="d-flex flex-wrap align-items-center">
-                    <li><a href="#"><?php the_category('<li><a href="#">,</a></li>');?>,</a></li>
+                    <li><a href="#"><?php the_category(',');?></a></li>
                   </ul>
                 </div>
 
@@ -107,7 +107,6 @@ get_header();
           </div>
         </div>
 
-        
       </div>
     </div>
   </section>

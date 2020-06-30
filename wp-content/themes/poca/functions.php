@@ -133,8 +133,8 @@ function poca_widgets_init() {
 			'name'          => esc_html__( 'Sidebar', 'poca' ),
 			'id'            => 'sidebar-1',
 			'description'   => esc_html__( 'Add widgets here.', 'poca' ),
-			'before_widget' => '<section id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</section>',
+			'before_widget' => '<div class="single-widget-area search-widget-area mb-80">',
+			'after_widget'  => '</div>',
 			'before_title'  => '<h2 class="widget-title">',
 			'after_title'   => '</h2>',
 		)
@@ -179,6 +179,7 @@ function poca_scripts() {
 	wp_enqueue_style( 'audioplayer-css', get_template_directory_uri() . '/css/default-assets/audioplayer.css', array(), _S_VERSION );
 	wp_enqueue_style( 'classynav-css', get_template_directory_uri() . '/css/default-assets/classy-nav.css', array(), _S_VERSION );
 	wp_enqueue_style( 'fonts-css', get_template_directory_uri() . '/css/default-assets/hkgrotesk-fonts.css', array(), _S_VERSION );
+	
 
 	wp_enqueue_style( 'stylesheet', get_template_directory_uri() . '/style.css', array(), _S_VERSION );
 	wp_style_add_data( 'stylesheet', 'rtl', 'replace' );
@@ -214,3 +215,23 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+require get_stylesheet_directory() . '/inc/class-poca-recentpost.php'; // Including custom widget file.
+new Poca_Recentpost();
+
+require get_stylesheet_directory() . '/inc/class-poca-categories.php'; // Including custom widget file.
+new Poca_Categories();
+
+/**
+ * Function to add icon class to category list.
+ *
+ * @param [type] $output
+ * @param [type] $args
+ * @return void
+ */
+function my_list_categories( $output, $args ) {
+
+	$pattern = '/(<a.*?>)/';
+        $replacement = '$1<i class="fa fa-angle-double-right" aria-hidden="true"></i> ';
+        return preg_replace( $pattern, $replacement, $output );
+}
+add_filter( 'wp_list_categories', 'my_list_categories', 10, 2 );

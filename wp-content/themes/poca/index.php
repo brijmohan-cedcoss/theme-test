@@ -62,7 +62,7 @@ get_header();
 							<a href="<?php echo get_permalink(); ?>" class="post-title"><?php the_title(); ?></a>
 							<div class="post-meta mb-15">
 								<a href="#" class="post-author"><?php the_author(); ?></a> |
-								<a href="#" class="post-catagory"><?php the_category('<a href="#" class="post-catagory"></a>'); ?></a>
+								<a href="#" class="post-catagory"><?php the_category(','); ?></a>
 							</div>
 							<p><?php echo wp_trim_words( get_the_content(), 100, '</br></br><a href="' . get_permalink() . '" class="read-more-btn">Continue reading <i class="fa fa-angle-right" aria-hidden="true"></i></a>' ); ?></p>
 							<!-- <a href="#" class="read-more-btn">Continue reading <i class="fa fa-angle-right" aria-hidden="true"></i></a> -->
