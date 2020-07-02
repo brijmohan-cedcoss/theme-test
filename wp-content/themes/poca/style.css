@@ -438,7 +438,7 @@ ul {
         .classy-nav-container .classy-navbar .classynav ul li a {
           border-bottom: none;
           font-size: 14px; } }
-    .classy-nav-container .classy-navbar .classynav ul li.cn-dropdown-item ul li a {
+    .classy-nav-container .classy-navbar .classynav ul li.menu-item-has-children ul li a {
       font-size: 14px;
       text-transform: capitalize; }
     .classy-nav-container .classy-navbar .classynav ul li.current-item a::after {
@@ -466,15 +466,17 @@ ul {
 .classynav ul li.megamenu-item > a::after {
   color: #ffffff; }
 
-.breakpoint-off .classynav ul li .dropdown {
+.breakpoint-off .classynav ul li .sub-menu {
   background-color: #000000; }
 
-.classynav ul li .dropdown li a {
+.classynav ul li .sub-menu li a {
   border-bottom: none;
-  height: 40px; }
+  height: 40px;
+  
+ }
 
-.classynav ul li .dropdown li .dropdown li .dropdown li a,
-.classynav ul li .dropdown li .dropdown li a {
+.classynav ul li .sub-menu li .sub-menu li .sub-menu li a,
+.classynav ul li .sub-menu li .sub-menu li a {
   border-bottom: none; }
 
 .top-search-area {
@@ -1060,7 +1062,7 @@ ul {
     @media only screen and (max-width: 767px) {
       .comment_area .title {
         font-size: 20px; } }
-  .comment_area .comment {
+  .comment_area .comment-content {
     position: relative;
     z-index: 1;
     margin-bottom: 30px; }
@@ -1102,7 +1104,7 @@ ul {
         .comment_area .comment-content .comment-meta p {
           font-size: 14px; } }
     .comment_area .comment-content .comment-meta a.like,
-    .comment_area .comment-content .comment-meta a.reply {
+    .comment_area .comment-content .comment-meta a.comment-reply-link {
       display: inline-block;
       padding: 5px 15px 3px;
       font-size: 12px;
@@ -1110,8 +1112,8 @@ ul {
       border: 1px solid #ebebeb;
       text-transform: uppercase; }
       .comment_area .comment-content .comment-meta a.like:focus, .comment_area .comment-content .comment-meta a.like:hover,
-      .comment_area .comment-content .comment-meta a.reply:focus,
-      .comment_area .comment-content .comment-meta a.reply:hover {
+      .comment_area .comment-content .comment-meta a.comment-reply-link:focus,
+      .comment_area .comment-content .comment-meta a.comment-reply-link:hover {
         border-color: #f55656;
         background-color: #f55656;
         color: #ffffff; }

@@ -234,3 +234,51 @@ function add_icon_list_categories( $output ) {
     return preg_replace( $pattern, $replacement, $output );
 }
 add_filter( 'wp_list_categories', 'add_icon_list_categories', 10, 1 );
+
+require get_template_directory() . '/template-parts/poca-comments.php'; // Including custom comments template file.
+
+
+/**
+ * Add custom HTML just after the opening `<form>` tag in the comment_form() output.
+ */
+add_action( 'comment_form_top', function(){
+	// Adjust this to your needs:
+	echo '<div class="row">'; 
+});
+
+/**
+ * Add custom HTML just before the closing `</form>` tag in the comment_form() output.
+ */
+add_action( 'comment_form', function(){
+	// Adjust this to your needs:
+	echo '</div>'; 
+});
+
+/**
+ * Function to change the comment field order
+ *
+ * @param [type] $fields outputs the fields of the comment_form();
+ * @return $fields
+ */
+function poca_theme_comment_fields_order( $fields ) {
+    $comment_field = $fields['comment'];
+    $author_field = $fields['author'];
+    $email_field = $fields['email'];
+    $url_field = $fields['url'];
+    $cookies_field = $fields['cookies'];
+    unset( $fields['comment'] );
+    unset( $fields['author'] );
+    unset( $fields['email'] );
+    unset( $fields['url'] );
+	unset( $fields['cookies'] );
+	
+    // the order of fields is the order below.
+    $fields['author'] = $author_field;
+    $fields['email'] = $email_field;
+    $fields['url'] = $url_field;
+    $fields['comment'] = $comment_field;
+    $fields['cookies'] = $cookies_field;
+    // done ordering, now return the fields:
+    return $fields;
+}
+add_filter( 'comment_form_fields', 'poca_theme_comment_fields_order' );
