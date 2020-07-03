@@ -68,7 +68,7 @@ get_header();
                 <h2><?php the_title(); ?></h2>
                 <div class="post-meta">
                   <a href="#" class="post-author"><?php the_author();?></a> |
-                  <a href="#" class="post-catagory"><?php the_category(','); ?></a>
+                  <a href="#" class="post-catagory"><?php the_category( ',' ); ?></a>
                 </div>
               </div>
 
@@ -78,18 +78,18 @@ get_header();
               <div class="post-catagories d-flex align-items-center">
                 <h6>Categories:</h6>
                 <ul class="d-flex flex-wrap align-items-center">
-                  <li><a href="#"><?php the_category(',');?></a></li>
+                  <li><a href="#"><?php the_category( ',' );?></a></li>
                 </ul>
               </div>
 
               <!-- Pagination -->
               <div class="poca-pager d-flex mb-30">
               <?php 
-                  $prev_post = get_adjacent_post(false, '', true);
-                  $next_post = get_adjacent_post(false, '', false);
+                  $prev_post = get_adjacent_post( false, '', true );
+                  $next_post = get_adjacent_post( false, '', false );
                   ?>
-                <a href="<?php echo get_permalink($prev_post->ID); ?>">Previous Post <span><?php echo($prev_post->post_title); ?></span></a>
-                <a href="<?php echo get_permalink($next_post->ID); ?>">Next Post <span><?php echo($next_post->post_title); ?></span></a>
+                <a href="<?php echo get_permalink( $prev_post->ID ); ?>">Previous Post <span><?php echo( $prev_post->post_title ); ?></span></a>
+                <a href="<?php echo get_permalink( $next_post->ID ); ?>">Next Post <span><?php echo( $next_post->post_title ); ?></span></a>
               </div>
             <?php } ?>
               <!-- Comments Area -->
@@ -101,33 +101,33 @@ get_header();
 
                 <!-- Form -->
                 <?php //Declare Vars
-                    $comment_send = 'Post Comment';
-                    $comment_reply = '<h5 class="mb-30">Leave A Comment</h5>';
-                    $comment_reply_to = 'Reply';
+                    $comment_send      = 'Post Comment';
+                    $comment_reply     = '<h5 class="mb-30">Leave A Comment</h5>';
+                    $comment_reply_to  = 'Reply';
                     $comment_cookies_1 = ' By commenting you accept the';
                     $comment_cookies_2 = ' Privacy Policy';
                     
-                    $comment_author = 'Name';
-                    $comment_email = 'E-Mail';
-                    $comment_body = 'Comment';
-                    $comment_url = 'Website';
+                    $comment_author    = 'Name';
+                    $comment_email     = 'E-Mail';
+                    $comment_body      = 'Comment';
+                    $comment_url       = 'Website';
                     
                     //Array
-                    $comments_args = array(
+                    $comments_args     = array(
                         //Define Fields
-                        'fields' => array(
+                        'fields'            => array(
                             //Author field
-                            'author' => '<div class="col-lg-6">
-                                          <input type="text" id="author" name="author" class="form-control mb-30" aria-required="true" placeholder="' . $comment_author .'">
-                                        </div>',
+                            'author'  => '<div class="col-lg-6">
+                                            <input type="text" id="author" name="author" class="form-control mb-30" aria-required="true" placeholder="' . $comment_author .'">
+                                          </div>',
                             //Email Field
-                            'email' => '<div class="col-lg-6">
-                                          <input type="email" id="email" name="email" class="form-control mb-30" placeholder="' . $comment_email .'">
-                                        </div>',
+                            'email'   => '<div class="col-lg-6">
+                                            <input type="email" id="email" name="email" class="form-control mb-30" placeholder="' . $comment_email .'">
+                                         </div>',
                             //URL Field
-                            'url' => '<div class="col-lg-6">
-                                        <input type="hidden" id="url" name="url" class="form-control mb-30" placeholder="' . $comment_url .'">
-                                      </div>',
+                            'url'     => '<div class="col-lg-6">
+                                            <input type="hidden" id="url" name="url" class="form-control mb-30" placeholder="' . $comment_url .'">
+                                          </div>',
                             //Cookies
                             'cookies' => '<div class="col-lg-6">
                                             <input type="checkbox" id="cookies" name="cookies"  required>' . $comment_cookies_1 . '<a href="' . get_privacy_policy_url() . '">' . $comment_cookies_2 . '</a>
@@ -135,21 +135,21 @@ get_header();
                         ),
                         
                         // Change the title of send button
-                        'label_submit' => __( $comment_send ),
+                        'label_submit'      => __( $comment_send ),
                         // Change the title of the reply section
-                        'title_reply' => __( $comment_reply ),
+                        'title_reply'       => __( $comment_reply ),
                         // Change the title of the reply section
-                        'title_reply_to' => __( $comment_reply_to ),
+                        'title_reply_to'    => __( $comment_reply_to ),
                         //Cancel Reply Text
                         'cancel_reply_link' => __( $comment_cancel ),
                         // Redefine your own textarea (the comment body).
-                        'comment_field' => '<div class="col-12">
-                                              <textarea id="comment" name="comment" class="form-control mb-30" aria-required="true" placeholder="' . $comment_body .'"></textarea>
-                                            </div>',
-                        //Message Before Comment
-                        'submit_button' => '<div class="col-12">
-                                              <button type="submit" name="%1$s" id="%2$s" class="%3$s btn poca-btn mt-30" value="%4$s">Post Comment</button>
-                                           </div>',
+                        'comment_field'     => '<div class="col-12">
+                                                  <textarea id="comment" name="comment" class="form-control mb-30" aria-required="true" placeholder="' . $comment_body .'"></textarea>
+                                                </div>',
+                        //Redefine your own submit button
+                        'submit_button'      => '<div class="col-12">
+                                                   <button type="submit" name="%1$s" id="%2$s" class="%3$s btn poca-btn mt-30" value="%4$s">Post Comment</button>
+                                                 </div>',
                       );
                     comment_form( $comments_args );
 

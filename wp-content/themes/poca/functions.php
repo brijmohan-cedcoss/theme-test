@@ -241,18 +241,20 @@ require get_template_directory() . '/template-parts/poca-comments.php'; // Inclu
 /**
  * Add custom HTML just after the opening `<form>` tag in the comment_form() output.
  */
-add_action( 'comment_form_top', function(){
+add_action( 'comment_form_top', function() {
 	// Adjust this to your needs:
 	echo '<div class="row">'; 
-});
+	}
+);
 
 /**
  * Add custom HTML just before the closing `</form>` tag in the comment_form() output.
  */
-add_action( 'comment_form', function(){
+add_action( 'comment_form', function() {
 	// Adjust this to your needs:
 	echo '</div>'; 
-});
+	}
+);
 
 /**
  * Function to change the comment field order
