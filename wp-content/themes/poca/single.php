@@ -104,7 +104,9 @@ get_header();
                     $comment_send = 'Post Comment';
                     $comment_reply = '<h5 class="mb-30">Leave A Comment</h5>';
                     $comment_reply_to = 'Reply';
- 
+                    $comment_cookies_1 = ' By commenting you accept the';
+                    $comment_cookies_2 = ' Privacy Policy';
+                    
                     $comment_author = 'Name';
                     $comment_email = 'E-Mail';
                     $comment_body = 'Comment';
@@ -124,9 +126,14 @@ get_header();
                                         </div>',
                             //URL Field
                             'url' => '<div class="col-lg-6">
-                                        <input id="url" name="url" class="form-control mb-30" placeholder="' . $comment_url .'">
+                                        <input type="hidden" id="url" name="url" class="form-control mb-30" placeholder="' . $comment_url .'">
                                       </div>',
+                            //Cookies
+                            'cookies' => '<div class="col-lg-6">
+                                            <input type="checkbox" id="cookies" name="cookies"  required>' . $comment_cookies_1 . '<a href="' . get_privacy_policy_url() . '">' . $comment_cookies_2 . '</a>
+                                          </div>',
                         ),
+                        
                         // Change the title of send button
                         'label_submit' => __( $comment_send ),
                         // Change the title of the reply section

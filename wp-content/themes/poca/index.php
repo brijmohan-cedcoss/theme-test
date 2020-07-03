@@ -66,7 +66,7 @@ get_header();
 							</div>
 							<p><?php echo wp_trim_words( get_the_content(), 100, '</br></br><a href="' . get_permalink() . '" class="read-more-btn">Continue reading <i class="fa fa-angle-right" aria-hidden="true"></i></a>' ); ?></p>
 							<!-- <a href="#" class="read-more-btn">Continue reading <i class="fa fa-angle-right" aria-hidden="true"></i></a> -->
-							
+
 						</div>
 					</div>
 			<?php

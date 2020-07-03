@@ -1,15 +1,10 @@
 <?php
 /**
- * The template for displaying all pages
+ * Template Name: Contact Page Template
  *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site may use a
- * different template.
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package poca
+ * @package WordPress
+ * @subpackage Poca theme
+ * @since Poca theme 1.0
  */
 
 get_header();
@@ -44,7 +39,7 @@ get_header();
   <section class="poca-contact-area mt-50 mb-100">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-12 col-lg-10">
+        
         
           <?php
             while ( have_posts() ) {
@@ -57,7 +52,7 @@ get_header();
               }
             }	
           ?>
-        </div>
+    
       </div>
     </div>
   </section>

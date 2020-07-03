@@ -24,7 +24,7 @@ function poca_comments($comment, $args, $depth) {
 			<div class="comment-content d-flex">
 				<!-- Comment Author -->
 				<div class="comment-author">
-					<?php echo get_avatar($comment,$size='74',$default='' ); ?>
+					<?php echo get_avatar($comment,$size='74',$default='monsterid' ); ?>
 				</div>
 				<!-- Comment Meta -->
 				<div class="comment-meta">
