@@ -74,10 +74,10 @@ get_header();
 			} 
 			?>
           <!-- Pagination -->
-          <!-- <div class="poca-pager d-flex mb-80">
-            <a href="#">Previous Post <span>Episode 3 – Wardrobe For Busy People</span></a>
-            <a href="#">Next Post <span>Episode 6 – Defining Your Style</span></a>
-          </div> -->
+          <div class="poca-pager d-flex mb-80">
+            <?php previous_posts_link( 'Older posts' ); ?>
+            <?php next_posts_link( 'Newer posts' ); ?>
+          </div>
 
         </div>
 

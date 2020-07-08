@@ -114,9 +114,7 @@ class Poca_Categories extends WP_Widget {
 			?>
 		<ul class="catagories-list">
 			<?php
-			
 			$cat_args['title_li'] = '';
-			
 
 			/**
 			 * Filters the arguments for the Categories widget.
@@ -127,7 +125,18 @@ class Poca_Categories extends WP_Widget {
 			 * @param array $cat_args An array of Categories widget options.
 			 * @param array $instance Array of settings for the current widget.
 			 */
-			wp_list_categories( apply_filters( 'widget_categories_args', $cat_args, $instance ) );
+			// wp_list_categories( apply_filters( 'widget_categories_args', $cat_args, $instance ) );
+			$category = get_terms(
+				array(
+					'taxonomy'   => 'poca_category',
+					'hide_empty' => false,
+				)
+			);
+			if ( ! empty( $category ) && is_array( $category ) ) {
+				foreach ( $category as $cate ) {
+					echo '<li><a href="' . get_term_link( $cate->slug, 'poca_category' ) . '"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp' . $cate->name . '</a></li>';
+				}
+			}
 			?>
 		</ul>
 			<?php

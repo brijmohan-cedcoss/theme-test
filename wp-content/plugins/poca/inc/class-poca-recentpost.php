@@ -71,6 +71,7 @@ class Poca_Recentpost extends WP_Widget {
 			apply_filters(
 				'widget_posts_args',
 				array(
+					'post_type'           => 'podcast',
 					'posts_per_page'      => $number,
 					'no_found_rows'       => true,
 					'post_status'         => 'publish',
@@ -90,7 +91,6 @@ class Poca_Recentpost extends WP_Widget {
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
 		?>
-		
 			<?php foreach ( $r->posts as $recent_post ) : ?>
 				<?php
 				$post_title   = get_the_title( $recent_post->ID );
@@ -102,18 +102,17 @@ class Poca_Recentpost extends WP_Widget {
 				}
 				?>
 				<div class="single-news-area d-flex">
-                <div class="blog-thumbnail">
-                  <?php echo get_the_post_thumbnail( $recent_post->ID ) ?>
-                </div>
-                <div class="blog-content">
-				  <a href="<?php the_permalink( $recent_post->ID ); ?>"<?php echo $aria_current; ?> class="post-title"><?php echo $title; ?></a>
-				  <?php if ( $show_date ) : ?>
-				  	<span class="post-date"><?php echo get_the_date( '', $recent_post->ID ); ?></span>
-				  <?php endif; ?>
-                </div>
-              </div>
-			<?php endforeach; ?>
-		
+					<div class="blog-thumbnail">
+						<?php echo get_the_post_thumbnail( $recent_post->ID, 'thumbnail' ); ?>
+					</div>
+					<div class="blog-content">
+						<a href="<?php the_permalink( $recent_post->ID ); ?>"<?php echo $aria_current; ?> class="post-title"><?php echo $title; ?></a>
+						<?php if ( $show_date ) : ?>
+						<span class="post-date"><?php echo get_the_date( '', $recent_post->ID ); ?></span>
+						<?php endif; ?>
+					</div>
+				</div>
+			<?php endforeach; ?>	
 		<?php
 		echo $args['after_widget'];
 	}

@@ -12,6 +12,9 @@ if ( ! defined( '_S_VERSION' ) ) {
 	define( '_S_VERSION', '1.0.0' );
 }
 
+if ( ! isset( $content_width ) )
+    $content_width = 740;
+
 if ( ! function_exists( 'poca_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
@@ -170,6 +173,7 @@ function poca_scripts() {
 	wp_enqueue_script( 'avoidconerror-js', get_template_directory_uri() . '/js/default-assets/avoid.console.error.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'classynav-js', get_template_directory_uri() . '/js/default-assets/classynav.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'scrollup-js', get_template_directory_uri() . '/js/default-assets/jquery.scrollup.min.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'pocajq-js', get_template_directory_uri() . '/js/poca-jquery.js', array(), _S_VERSION, true );
 
 	
 	wp_enqueue_style( 'animate-css', get_template_directory_uri() . '/css/animate.css', array(), _S_VERSION );
@@ -215,11 +219,11 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
-require get_stylesheet_directory() . '/inc/class-poca-recentpost.php'; // Including custom widget file.
-new Poca_Recentpost();
+// require get_stylesheet_directory() . '/inc/class-poca-recentpost.php'; // Including custom widget file.
+// new Poca_Recentpost();
 
-require get_stylesheet_directory() . '/inc/class-poca-categories.php'; // Including custom widget file.
-new Poca_Categories();
+// require get_stylesheet_directory() . '/inc/class-poca-categories.php'; // Including custom widget file.
+// new Poca_Categories();
 
 /**
  * Function to add icon class to category list.
@@ -284,3 +288,17 @@ function poca_theme_comment_fields_order( $fields ) {
     return $fields;
 }
 add_filter( 'comment_form_fields', 'poca_theme_comment_fields_order' );
+
+/**
+ * Turning comments open for custom post types.
+ */
+function poca_comments_open( $open, $post_id ) {
+
+	$post = get_post( $post_id );
+
+	if ( 'podcast' == $post->post_type )
+		$open = true;
+
+	return $open;
+}
+add_filter( 'comments_open', 'poca_comments_open', 10, 2 );
