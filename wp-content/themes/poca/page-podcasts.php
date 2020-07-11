@@ -99,7 +99,7 @@ get_header();
 			if( ! empty( $category ) && is_array( $category ) ){
 				foreach( $category as $cate ) {
 		  ?>
-          <button class="btn" data-filter=".entre"><?php echo $cate->name; ?></button>
+          <button class="btn" data-filter="<?php echo $cate->slug; ?>"><?php echo $cate->name; ?></button>
 		  <?php
 				}
 			} 
@@ -111,12 +111,12 @@ get_header();
       </div>
     </div>
 
-    <div class="container">
+    <div class="container" id="poca-portfolio">
       <div class="row poca-portfolio">
 	  	<?php
           $args = array(
             'post_type' => 'podcast',
-            'posts_per_page' => -1,
+            'posts_per_page' => 2,
           );
           $query = new WP_Query($args);
       		if ( $query->have_posts() ) { 
@@ -169,7 +169,7 @@ get_header();
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">
-          <a href="#" class="btn poca-btn mt-70">Load More</a>
+          <a href="#" id="load_more" class="btn poca-btn mt-70">Load More</a>
         </div>
       </div>
     </div>

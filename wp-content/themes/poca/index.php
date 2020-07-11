@@ -83,7 +83,7 @@ get_header();
 
         <div class="col-12 col-lg-4">
           <div class="sidebar-area mt-5">
-            <?php get_sidebar(); ?>
+            <?php get_sidebar('alt'); ?>
           </div>
         </div>
       </div>

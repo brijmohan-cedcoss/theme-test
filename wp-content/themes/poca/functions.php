@@ -142,6 +142,29 @@ function poca_widgets_init() {
 			'after_title'   => '</h2>',
 		)
 	);
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Sidebar top', 'poca' ),
+			'id'            => 'sidebar-top',
+			'description'   => esc_html__( 'Add widgets here.', 'poca' ),
+			'before_widget' => '<div class="top-search-area">',
+			'after_widget'  => '</div>',
+			'before_title'  => '',
+			'after_title'   => '',
+		)
+	);
+
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Sidebar 2', 'poca' ),
+			'id'            => 'sidebar-2',
+			'description'   => esc_html__( 'Add widgets here.', 'poca' ),
+			'before_widget' => '<div class="single-widget-area search-widget-area mb-80">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
 }
 add_action( 'widgets_init', 'poca_widgets_init' );
 

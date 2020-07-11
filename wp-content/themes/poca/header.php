@@ -62,32 +62,29 @@
 
 				<!-- Nav Start -->
 				<div class="classynav">
-				<?php
-					wp_nav_menu(
-						array(
-							'container_class' => '',
-							'theme_location' => 'menu-1',
-							'menu_id'        => 'primary-menu',
-						)
-					);
-				?>
+					<?php
+						wp_nav_menu(
+							array(
+								'container_class' => '',
+								'theme_location' => 'menu-1',
+								'menu_id'        => 'primary-menu',
+							)
+						);
 
-				<!-- Top Search Area -->
-				<div class="top-search-area">
-					<form action="index.html" method="post">
-					<input type="search" name="top-search-bar" class="form-control" placeholder="Search and hit enter...">
-					<button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-					</form>
-				</div>
+					?>
 
-				<!-- Top Social Area -->
-				<div class="top-social-area">
-					<a href="#" class="fa fa-facebook" aria-hidden="true"></a>
-					<a href="#" class="fa fa-twitter" aria-hidden="true"></a>
-					<a href="#" class="fa fa-pinterest" aria-hidden="true"></a>
-					<a href="#" class="fa fa-instagram" aria-hidden="true"></a>
-					<a href="#" class="fa fa-youtube-play" aria-hidden="true"></a>
-				</div>
+					<!-- Top Search Area -->
+					
+					<?php dynamic_sidebar( 'sidebar-top' ); ?>
+
+					<!-- Top Social Area -->
+					<div class="top-social-area">
+						<a href="#" class="fa fa-facebook" aria-hidden="true"></a>
+						<a href="#" class="fa fa-twitter" aria-hidden="true"></a>
+						<a href="#" class="fa fa-pinterest" aria-hidden="true"></a>
+						<a href="#" class="fa fa-instagram" aria-hidden="true"></a>
+						<a href="#" class="fa fa-youtube-play" aria-hidden="true"></a>
+					</div>
 
 				</div>
 				<!-- Nav End -->

@@ -160,5 +160,130 @@ add_action( 'init', 'poca_custom_taxonomy' );
 require plugin_dir_path( __FILE__ ) . '/inc/class-poca-categories.php'; // Including custom widget file.
 new Poca_Categories();
 
+require plugin_dir_path( __FILE__ ) . '/inc/class-poca-categories2.php'; // Including custom widget file.
+new Poca_Categories2();
+
 require plugin_dir_path( __FILE__ ) . '/inc/class-poca-recentpost.php'; // Including custom widget file.
 new Poca_Recentpost();
+
+require plugin_dir_path( __FILE__ ) . '/inc/class-poca-recentpost2.php'; // Including custom widget file.
+new Poca_Recentpost2();
+
+/**
+ * Enqueue and Localize script.
+ */
+function poca_ajax_enqueue() {
+
+	// Enqueue script on the frontend.
+	wp_enqueue_script(
+		'poca_ajax_enqueue',
+		plugins_url( '/js/poca-ajax.js', __FILE__ ),
+		array( 'jquery' ),
+		'1.0.0',
+		true,
+	);
+
+	// The wp_localize_script allows us to output the ajax_url path for our script to use.
+	wp_localize_script(
+		'poca_ajax_enqueue',
+		'poca_ajax_obj',
+		array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'nonce'   => wp_create_nonce( 'ajax-nonce' ),
+		),
+	);
+
+}
+add_action( 'wp_enqueue_scripts', 'poca_ajax_enqueue' );
+
+/**
+ * Ajax request handler
+ *
+ * @return void
+ */
+function poca_load_post_ajax() {
+	$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : ' ';
+
+	if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
+		die( 'Nonce value cannot be verified.' );
+	}
+	if ( isset( $_POST['ppp'] ) && isset( $_POST['page'] ) && isset( $_POST['category'] ) ) {
+		$post_per_page = sanitize_text_field( wp_unslash( $_POST['ppp'] ) );
+		$paged         = sanitize_text_field( wp_unslash( $_POST['page'] ) );
+		$cate          = sanitize_text_field( wp_unslash( $_POST['category'] ) );
+
+		if ( '*' === $cate ) {
+			$args = array(
+				'post_type'      => 'podcast',
+				'posts_per_page' => $post_per_page,
+			);
+		} else {
+			$args = array(
+				'post_type'      => 'podcast',
+				'posts_per_page' => $post_per_page,
+				'tax_query'      => array(
+					array(
+						'taxonomy' => 'poca_category',
+						'terms'    => $cate,
+						'field'    => 'slug',
+					),
+				),
+			);
+		}
+	}
+
+		$query = new WP_Query( $args ); ?>
+		<div class="row poca-portfolio" >
+		<?php
+		while ( $query->have_posts() ) {
+			$query->the_post();
+			?>
+
+			<!-- Single gallery Item -->
+			<div  class="col-12 col-md-6 single_gallery_item entre wow fadeInUp" data-wow-delay="0.2s">
+				<!-- Welcome Music Area -->
+				<div class="poca-music-area style-2 d-flex align-items-center flex-wrap">
+					<div class="poca-music-thumbnail">
+						<?php the_post_thumbnail(); ?>
+					</div>
+					<div class="poca-music-content text-center">
+						<span class="music-published-date mb-2"><?php echo get_the_date(); ?></span>
+						<h2><?php the_title(); ?></h2>
+						<div class="music-meta-data">
+							<p>By <a href="#" class="music-author"><?php the_author(); ?></a> | 
+							<?php
+							$terms = wp_get_post_terms( $query->post->ID, 'poca_category', array( 'fields' => 'all' ) );
+							foreach ( $terms as $term) { 
+							?>
+							<a href="<?php echo( get_term_link( $term->slug, 'poca_category' ) ); ?>" class="music-catagory"><?php echo $term->name; ?></a> <?php } ?>| 
+							<a href="#" class="music-duration"><?php the_time(); ?></a></p>
+						</div>
+						<!-- Music Player -->
+						<div class="poca-music-player">
+							<audio preload="auto" controls>
+							<source src="<?php echo get_template_directory_uri(); ?>/audio/dummy-audio.mp3">
+							</audio>
+						</div>
+						<!-- Likes, Share & Download -->
+						<div class="likes-share-download d-flex align-items-center justify-content-between">
+							<a href="#"><i class="fa fa-heart" aria-hidden="true"></i> Like (29)</a>
+							<div>
+								<a href="#" class="mr-4"><i class="fa fa-share-alt" aria-hidden="true"></i> Share(04)</a>
+								<a href="#"><i class="fa fa-download" aria-hidden="true"></i> Download (12)</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
+			<?php
+			wp_reset_postdata();
+		}
+		?> 
+		</div>
+		<?php
+
+		die();
+}
+
+add_action( 'wp_ajax_nopriv_poca_ajax_request', 'poca_load_post_ajax' );
+add_action( 'wp_ajax_poca_ajax_request', 'poca_load_post_ajax' );

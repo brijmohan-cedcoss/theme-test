@@ -183,7 +183,7 @@ get_header();
             if( ! empty( $category ) && is_array( $category ) ){
               foreach( $category as $cate ) {
           ?>
-          <button class="btn" data-filter=".entre"><?php echo $cate->name; ?></button>
+          <button class="btn" id="filter-btn" data-filter="<?php echo $cate->slug; ?>"><?php echo $cate->name; ?></button>
           <?php
               }
             }
@@ -195,12 +195,13 @@ get_header();
       </div>
     </div>
 
-    <div class="container">
-      <div class="row poca-portfolio">
+    <div class="container" id="poca-portfolio">
+      <div class="row poca-portfolio" >
       	<?php
           $args = array(
+            
             'post_type' => 'podcast',
-            'posts_per_page' => -1,
+            'posts_per_page' => 2,
           );
           $query = new WP_Query($args);
       		if ( $query->have_posts() ) { 
@@ -209,7 +210,7 @@ get_header();
         ?>
 
         <!-- Single gallery Item -->
-        <div class="col-12 col-md-6 single_gallery_item entre wow fadeInUp" data-wow-delay="0.2s">
+        <div  class="col-12 col-md-6 single_gallery_item entre wow fadeInUp" data-wow-delay="0.2s">
           <!-- Welcome Music Area -->
           <div class="poca-music-area style-2 d-flex align-items-center flex-wrap">
             <div class="poca-music-thumbnail">
@@ -253,7 +254,7 @@ get_header();
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">
-          <a href="#" class="btn poca-btn mt-70">Load More</a>
+          <a href="#" id="load_more" class="btn poca-btn mt-70">Load More</a>
         </div>
       </div>
     </div>
