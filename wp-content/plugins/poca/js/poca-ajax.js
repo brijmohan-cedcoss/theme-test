@@ -10,28 +10,28 @@ jQuery(document).ready( function($) {
 				data : {
 					'action' : 'poca_ajax_request',
 					'ppp'    : post_per_page,
-					'page' :   page,
 					'category' : category,
 					'nonce' : poca_ajax_obj.nonce
 				},
-				success:function( data ) {
+				success:function(data) {
 					$("#poca-portfolio").html(data);
 				},
-				error  : function( errorThrown ) {
-					console.log( errorThrown );
+
+				error  : function(errorThrown) {
+					console.log(errorThrown);
 				}
 			});
 		}
 
-		$(document).on('click', '#load_more', function(e) {
+		$('body').on('click', '#load_more', function(e) {
 			e.preventDefault();
-			category= $('.portfolio-menu  .active').data('filter');
+			category= $('.portfolio-menu .active').data('filter');
 			post_per_page += 2;
 			ajax_call();
 		});
 
-		$(document).on('click', '.portfolio-menu button', function(e) {
-			e.preventDefault();
+		$('body').on('click', '.portfolio-menu button', function(e) {
+			//e.preventDefault();
 			post_per_page = 2;
 			category = $(this).data('filter');
 			ajax_call();

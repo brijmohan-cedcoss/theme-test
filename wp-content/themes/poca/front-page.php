@@ -155,7 +155,7 @@ get_header();
   <!-- ***** Welcome Area End ***** -->
 
   <!-- ***** Latest Episodes Area Start ***** -->
-  <section class="poca-latest-epiosodes section-padding-80">
+  <section id='poca_section' class="poca-latest-epiosodes section-padding-80">
     <div class="container">
       <div class="row">
         <!-- Section Heading -->

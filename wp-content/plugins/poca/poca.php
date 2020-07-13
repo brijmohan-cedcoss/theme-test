@@ -202,17 +202,16 @@ add_action( 'wp_enqueue_scripts', 'poca_ajax_enqueue' );
  * @return void
  */
 function poca_load_post_ajax() {
-	$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : ' ';
+	$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 
 	if ( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) ) {
 		die( 'Nonce value cannot be verified.' );
 	}
-	if ( isset( $_POST['ppp'] ) && isset( $_POST['page'] ) && isset( $_POST['category'] ) ) {
+	if ( isset( $_POST['ppp'] ) && isset( $_POST['category'] ) ) {
 		$post_per_page = sanitize_text_field( wp_unslash( $_POST['ppp'] ) );
-		$paged         = sanitize_text_field( wp_unslash( $_POST['page'] ) );
 		$cate          = sanitize_text_field( wp_unslash( $_POST['category'] ) );
 
-		if ( '*' === $cate ) {
+		if ( '*' == $cate ) {
 			$args = array(
 				'post_type'      => 'podcast',
 				'posts_per_page' => $post_per_page,
